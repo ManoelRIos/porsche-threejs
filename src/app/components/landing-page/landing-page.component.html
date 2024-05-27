@@ -1,17 +1,27 @@
-<div class="flex flex-col items-center gap-4 justify-center p-6">
-  <h2 class="logo text-gray-200 text-3xl">PORSCHE</h2>
-  <div>
-    <h3 class="text-9xl font-bold text-gray-200">
-      911 CARRERA
-    </h3>
+<div class="flex flex-col items-center gap-4 justify-center h-screen pt-4">
+  <h2 class="logo text-zinc-200 text-3xl pb-8">PORSCHE</h2>
+  <div class="flex flex-col gap-6">
+    <h3 class="text-9xl font-bold text-teal-600">911 CARRERA</h3>
+    <div class="flex items-center justify-center gap-4">
+      <div class="border-b border-zinc-400 w-36"></div>
+      <p class="text-zinc-400 text-base">TECHNICAL SPECHS</p>
+      <div class="border-b border-zinc-400 w-36"></div>
+    </div>
+    <div class="flex justify-between gap-4">
+      <div>
+        <p class="text-zinc-200 text-xl font-bold">165 Mph</p>
+        <p class="text-teal-600 text-sm">TOP SPEED</p>
+      </div>
+      <div>
+        <p class="text-zinc-200 text-xl font-bold">518hp</p>
+        <p class="text-teal-600 text-sm">MAX POWER</p>
+      </div>
+      <div>
+        <p class="text-zinc-200 text-xl font-bold">5-6S</p>
+        <p class="text-teal-600 text-sm">0 - 60 MPH</p>
+      </div>
+    </div>
   </div>
 
-  <div class="flex items-center justify-center gap-4">
-    <div class="border-b border-gray-400 w-32"></div>
-    <p class="text-gray-400 text-base">TECHNICAL SPECHS</p>
-    <div class="border-b border-gray-400 w-32"></div>
-  </div>
-  <div id="threejs-canvas"></div>
+  <div id="threejs-canvas" class="w-full h-full"></div>
 </div>
-
-
