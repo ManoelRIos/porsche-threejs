@@ -60,14 +60,15 @@ export class LandingPageComponent {
     const axesHelper = new THREE.AxesHelper(100);
     const spotLightHelper = new THREE.SpotLightHelper(spotLight);
     const pointLightHelper = new THREE.PointLightHelper(pointLight);
-    scene.add(
+    scene
+      .add
       // lightHelper,
       // gridHelper,
       // axesHelper,
       // directionalLightHelper,
       // spotLightHelper,
       // pointLightHelper
-    );
+      ();
 
     // Sombras
     const groundGeometry = new THREE.PlaneGeometry(32, 32, 32, 32);
@@ -101,9 +102,9 @@ export class LandingPageComponent {
 
     //Adiciona controles 3D
     const controls = new OrbitControls(camera, document.body);
-    controls.enableZoom = false
-    controls.enablePan = false
-    controls.enableDamping = false
+    controls.enableZoom = false;
+    controls.enablePan = false;
+    controls.enableDamping = false;
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -131,9 +132,9 @@ export class LandingPageComponent {
 
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1; // Adjust exposure as needed
-
+    // https://market.pmnd.rs/hdri/kiara
     rgbeLoader.load(
-      '../../../assets/MRHDRI/MR_INT-006_LoftIndustrialWindow_Griffintown.hdr',
+      '../../../assets/MRHDRI/kiara_1_dawn_1k.hdr',
       (texture) => {
         texture.mapping = THREE.EquirectangularReflectionMapping;
         scene.environment = texture;
@@ -162,19 +163,17 @@ export class LandingPageComponent {
     camera.lookAt(scene.position);
 
     // animation
-    function animation(time: number) {         
-    
-      if(objectCar.rotation.x > -0.1){
-        objectCar.rotation.x -= 0.0001
-      }else {
-        objectCar.rotation.x += 0.0001
+    function animation(time: number) {
+      if (objectCar.rotation.x > -0.1) {
+        objectCar.rotation.x -= 0.0001;
+      } else {
+        objectCar.rotation.x += 0.0001;
       }
-      objectCar.rotation.y -= 0.0005;     
-      if(objectCar.rotation.y < -1){
-        objectCar.position.z += 0.001
-      }else if(objectCar.rotation.y < -3) {
-        objectCar.position.z += 0.001
-
+      objectCar.rotation.y -= 0.0005;
+      if (objectCar.rotation.y < -1) {
+        objectCar.position.z += 0.001;
+      } else if (objectCar.rotation.y < -3) {
+        objectCar.position.z += 0.001;
       }
       renderer.render(scene, camera);
     }
