@@ -170,7 +170,6 @@ export class LandingPageComponent {
         objectCar.rotation.x += 0.0001
       }
       objectCar.rotation.y -= 0.0005;     
-      console.log(objectCar.rotation.y);
       if(objectCar.rotation.y < -1){
         objectCar.position.z += 0.001
       }else if(objectCar.rotation.y < -3) {
