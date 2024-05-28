@@ -25,3 +25,10 @@
 
   <div id="threejs-canvas" class="w-full h-full"></div>
 </div>
+
+<div
+  *ngIf="isLoading"
+  class="flex justify-center items-center absolute -left-1/2 -top-1/2 w-full h-full translate-x-1/2 translate-y-1/2 bg-teal-950"
+>
+  <p class="text-6xl font-bold text-teal-200"><span>{{progress}}</span>/ <span>100</span></p>  
+</div>
