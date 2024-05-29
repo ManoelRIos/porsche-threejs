@@ -47,7 +47,7 @@ export class LandingPageComponent {
     spotLight.shadow.focus = 1;
     scene.add(spotLight);
 
-    var directionalLight = new THREE.DirectionalLight(0xffffff, 1); // Luz branca com intensidade 1
+    var directionalLight = new THREE.DirectionalLight(0xccfbf1, 3); // Luz branca com intensidade 1
     directionalLight.position.set(30, 30, 0); // Posição da luz
     directionalLight.scale.set(10, 10, 10); // Posição da luz
     directionalLight.castShadow = true; // default false
@@ -169,25 +169,43 @@ export class LandingPageComponent {
         if ((<THREE.Mesh>child).isMesh && objToPaint.includes(child.name)) {
           // (<THREE.Mesh>child).material = carMat;
         }
+
+
       });
 
       mesh.scale.set(1.5, 2.25, 1.5);
       mesh.position.set(0, 0.6, -3);
-      
+
       const headlightSpot1 = new THREE.SpotLight(0xfde68a, 1, 10, Math.PI / 3); // White color, 1 intensity, 10 range, narrow beam
-      headlightSpot1.position.set(mesh.position.x + 1.5, 4.5, mesh.position.z + 10); // Adjust position relative to car model
-      headlightSpot1.target.position.set(mesh.position.x + 1.5, 4.5, mesh.position.z + 10); // Aim slightly forward
+      headlightSpot1.position.set(
+        mesh.position.x + 1.5,
+        4.5,
+        mesh.position.z + 10
+      ); // Adjust position relative to car model
+      headlightSpot1.target.position.set(
+        mesh.position.x + 1.5,
+        4.5,
+        mesh.position.z + 10
+      ); // Aim slightly forward
       // headlightSpot1.castShadow = true; // Enable shadows
       scene.add(headlightSpot1);
       // const spotLightHelper = new THREE.SpotLightHelper(headlightSpot1);
       // scene.add(spotLightHelper)
 
-            const headlightSpot2 = new THREE.SpotLight(0xfde68a, 1, 10, Math.PI / 3); // White color, 1 intensity, 10 range, narrow beam
-      headlightSpot2.position.set(mesh.position.x - 5, 4.5, mesh.position.z + 10); // Adjust position relative to car model
-      headlightSpot2.target.position.set(mesh.position.x - 5, 4.5, mesh.position.z + 10); // Aim slightly forward      
+      const headlightSpot2 = new THREE.SpotLight(0xfde68a, 1, 10, Math.PI / 3); // White color, 1 intensity, 10 range, narrow beam
+      headlightSpot2.position.set(
+        mesh.position.x - 5,
+        4.5,
+        mesh.position.z + 10
+      ); // Adjust position relative to car model
+      headlightSpot2.target.position.set(
+        mesh.position.x - 5,
+        4.5,
+        mesh.position.z + 10
+      ); // Aim slightly forward
       headlightSpot2.castShadow = true; // Enable shadows
       scene.add(headlightSpot2);
-        const spotLightHelper = new THREE.SpotLightHelper(headlightSpot2);
+      const spotLightHelper = new THREE.SpotLightHelper(headlightSpot2);
       // scene.add(spotLightHelper)
       objectCar = mesh;
       scene.add(mesh);
@@ -195,8 +213,8 @@ export class LandingPageComponent {
       // renderer.render(gltf.scenes[0], camera);
     });
 
-    camera.position.set(50, 50, 50);
-    camera.lookAt(scene.position);
+    camera.position.set(15, 10, 15);
+    camera.lookAt(-scene.position.x, scene.position.y, -scene.position.z);
     // animation
 
     function animation(time: number) {
@@ -213,17 +231,17 @@ export class LandingPageComponent {
         if ((<THREE.Mesh>child).isMesh && rightWheels.includes(child.name)) {
           child.rotation.x -= 0.5;
         }
-      });      
+      });
+      
 
-      if (camera.position.z > 20) {
-        camera.position.z -= 0.05;
-      }
+      // objectCar?.rotateY(0.004);
+   
 
-      if (camera.position.y > 20) {
+      if (camera.position.y > 15) {
         camera.position.y -= 0.05;
       }
 
-      if (camera.position.x > 20) {
+      if (camera.position.x > 15) {
         camera.position.x -= 0.05;
       }
 
