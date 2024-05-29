@@ -17,9 +17,6 @@ export class LandingPageComponent {
   width = window.innerWidth;
   height = window.innerHeight;
 
-  color: string = '#e11d48';
-  colorTailwind: string = 'rose';
-
   isLoading: boolean = true;
   progress: string = '0';
   async ngOnInit(): Promise<void> {
@@ -33,7 +30,7 @@ export class LandingPageComponent {
     const scene = new THREE.Scene();
     // Adiciona iluminação
     const pointLight = new THREE.PointLight(0x99f6e4, 10);
-    const ambientLight = new THREE.AmbientLight(0xccfbf1);
+    const ambientLight = new THREE.AmbientLight(0xe4e4e7);
     scene.add(pointLight, ambientLight);
     // scene.fog = new THREE.Fog( 0xfefefe, 20, 2);
     const spotLight = new THREE.SpotLight(0x2dd4bf);
@@ -50,7 +47,8 @@ export class LandingPageComponent {
     scene.add(spotLight);
 
     var directionalLight = new THREE.DirectionalLight(0xffffff, 1); // Luz branca com intensidade 1
-    directionalLight.position.set(10, 30, 0); // Posição da luz
+    directionalLight.position.set(30, 30, 0); // Posição da luz
+    directionalLight.scale.set(10, 10, 10); // Posição da luz
     directionalLight.castShadow = true; // default false
     scene.add(directionalLight);
 
@@ -63,14 +61,15 @@ export class LandingPageComponent {
     const axesHelper = new THREE.AxesHelper(100);
     const spotLightHelper = new THREE.SpotLightHelper(spotLight);
     const pointLightHelper = new THREE.PointLightHelper(pointLight);
-    scene.add(
-      // lightHelper,
-      // gridHelper,
-      // axesHelper,
-      directionalLightHelper,
-      // spotLightHelper,
-      pointLightHelper
-    );
+    // scene
+    //   .add
+    //   lightHelper,
+    //   gridHelper,
+    //   axesHelper,
+    //   directionalLightHelper,
+    //   spotLightHelper,
+    //   pointLightHelper
+    //   ();
 
     // Sombras
     const groundGeometry = new THREE.PlaneGeometry(32, 32, 32, 32);
@@ -78,9 +77,6 @@ export class LandingPageComponent {
 
     const groundTexture = new THREE.TextureLoader().load(
       '../../../assets/floor/textures/asphalt_02_disp_4k.png'
-    );
-    const groundTexture3d = new THREE.TextureLoader().load(
-      '../../../assets/floor/textures/asphalt_02_diff_4k.jpg'
     );
 
     const planeGeo = new THREE.PlaneGeometry(100, 100, 100, 100);
@@ -91,15 +87,15 @@ export class LandingPageComponent {
     const plane = new THREE.Mesh(planeGeo, planeMat);
     plane.rotation.x = -0.5 * Math.PI;
     plane.receiveShadow = true;
-    scene.add(plane);
+    // scene.add(plane);
 
     const helper = new THREE.CameraHelper(directionalLight.shadow.camera);
-    scene.add(helper);
+    // scene.add(helper);
 
     //Adiciona controles 3D
-    // const controls = new OrbitControls(camera, document.body);
-    /*     controls.enableZoom = false;
-    controls.enablePan = false;     */
+    const controls = new OrbitControls(camera, document.body);
+    /*  controls.enableZoom = false;
+    controls.enablePan = false; */
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -130,7 +126,7 @@ export class LandingPageComponent {
     renderer.toneMappingExposure = 1; // Adjust exposure as needed
     // https://market.pmnd.rs/hdri/kiara
     rgbeLoader.load(
-      '../../../assets/MRHDRI/MR_INT-006_LoftIndustrialWindow_Griffintown.hdr',
+      '../../../assets/MRHDRI/MR_INT-001_NaturalStudio_NAD.hdr',
       (texture) => {
         texture.mapping = THREE.EquirectangularReflectionMapping;
         scene.environment = texture;
@@ -146,7 +142,7 @@ export class LandingPageComponent {
       });
 
       mesh.scale.set(9, 9, 9);
-      mesh.position.set(0, 0, -3);
+      mesh.position.set(0, -1, -3);
       scene.add(mesh);
     });
 
@@ -154,7 +150,7 @@ export class LandingPageComponent {
       '../../../assets/MRHDRI/kiara_1_dawn_1k.hdr'
     );
     const carMat = new THREE.MeshPhongMaterial({
-      color: Number('0x' + this.color.replace('#', '')),
+      color: 0xffffff,
       reflectivity: 10,
       // normalMap: carTexture
     });
@@ -163,8 +159,6 @@ export class LandingPageComponent {
     loader.load('../../../assets/porsche/scene.gltf', (gltf) => {
       console.log(gltf);
       const mesh = gltf.scene;
-      objectCar = mesh;
-
       mesh.traverse((child) => {
         child.castShadow = true;
         child.receiveShadow = true;
@@ -175,34 +169,65 @@ export class LandingPageComponent {
         // 14: Lataria
         // 26: Farol
         if ((<THREE.Mesh>child).isMesh && objToPaint.includes(child.name)) {
-          (<THREE.Mesh>child).material = carMat;
+          // (<THREE.Mesh>child).material = carMat;
         }
       });
 
       mesh.scale.set(1.5, 2.25, 1.5);
-      mesh.position.set(0, 1.6, -3);
-      pointLight.position.set(mesh.position.x + 1, 7, mesh.position.z + 10);
+      mesh.position.set(0, 0.6, -3);
+      
+      const headlightSpot1 = new THREE.SpotLight(0xfde68a, 1, 10, Math.PI / 3); // White color, 1 intensity, 10 range, narrow beam
+      headlightSpot1.position.set(mesh.position.x + 1.5, 4.5, mesh.position.z + 10); // Adjust position relative to car model
+      headlightSpot1.target.position.set(mesh.position.x + 1.5, 4.5, mesh.position.z + 10); // Aim slightly forward
+      // headlightSpot1.castShadow = true; // Enable shadows
+      scene.add(headlightSpot1);
+      // const spotLightHelper = new THREE.SpotLightHelper(headlightSpot1);
+      // scene.add(spotLightHelper)
 
+            const headlightSpot2 = new THREE.SpotLight(0xfde68a, 1, 10, Math.PI / 3); // White color, 1 intensity, 10 range, narrow beam
+      headlightSpot2.position.set(mesh.position.x - 5, 4.5, mesh.position.z + 10); // Adjust position relative to car model
+      headlightSpot2.target.position.set(mesh.position.x - 5, 4.5, mesh.position.z + 10); // Aim slightly forward      
+      headlightSpot2.castShadow = true; // Enable shadows
+      scene.add(headlightSpot2);
+        const spotLightHelper = new THREE.SpotLightHelper(headlightSpot2);
+      // scene.add(spotLightHelper)
+      objectCar = mesh;
       scene.add(mesh);
       // scene.add(pointLight);
       // renderer.render(gltf.scenes[0], camera);
     });
 
-    camera.position.set(15, 10, 15);
+    camera.position.set(50, 50, 50);
     camera.lookAt(scene.position);
     // animation
+
     function animation(time: number) {
-      /*       if (camera.position.z > 15) {
-        camera.position.z -= 0.1;
+      (<THREE.Mesh>objectCar)?.traverse((child) => {
+        const leftWheels = ['Object_44', 'Object_50'];
+        // 44: Roda TE
+        // 50: Roda DE
+        const rightWheels = ['Object_56', 'Object_62'];
+        // 56: Roda TD
+        // 62: Roda DD
+        if ((<THREE.Mesh>child).isMesh && leftWheels.includes(child.name)) {
+          child.rotation.x += 0.5;
+        }
+        if ((<THREE.Mesh>child).isMesh && rightWheels.includes(child.name)) {
+          child.rotation.x -= 0.5;
+        }
+      });      
+
+      if (camera.position.z > 20) {
+        camera.position.z -= 0.05;
       }
 
-      if (camera.position.y > 15) {
-        camera.position.y -= 0.1;
+      if (camera.position.y > 20) {
+        camera.position.y -= 0.05;
       }
 
-      if (camera.position.x > 15) {
-        camera.position.x -= 0.1;
-      } */
+      if (camera.position.x > 20) {
+        camera.position.x -= 0.05;
+      }
 
       renderer.render(scene, camera);
     }
