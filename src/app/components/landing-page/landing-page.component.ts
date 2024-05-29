@@ -158,13 +158,10 @@ export class LandingPageComponent {
 
     let objectCar: any;
     loader.load('../../../assets/porsche/scene.gltf', (gltf) => {
-      console.log(gltf);
       const mesh = gltf.scene;
       mesh.traverse((child) => {
         child.castShadow = true;
         child.receiveShadow = true;
-        console.log(child.name);
-        console.log(child);
         const objToPaint = ['Object_12', 'Object_14', 'Object_26', 'Object_28'];
         // 12: Aerofolio
         // 14: Lataria

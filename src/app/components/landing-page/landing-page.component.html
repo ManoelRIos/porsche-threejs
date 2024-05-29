@@ -26,7 +26,4 @@
   <div id="threejs-canvas" class="w-full h-full"></div>
 </div>
 
-<!-- *ngIf="isLoading" -->
-<app-loading   [progress]="progress" ></app-loading>
-
-
+<app-loading *ngIf="isLoading" [progress]="progress"></app-loading>
