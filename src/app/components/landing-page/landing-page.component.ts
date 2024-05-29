@@ -5,11 +5,12 @@ import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { LoadingComponent } from '../loading/loading.component';
 
 @Component({
   selector: 'app-landing-page',
   standalone: true,
-  imports: [NgIf, FormsModule],
+  imports: [NgIf, FormsModule, LoadingComponent],
   templateUrl: './landing-page.component.html',
   styleUrl: './landing-page.component.css',
 })
